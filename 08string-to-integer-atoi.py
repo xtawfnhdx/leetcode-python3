@@ -18,13 +18,33 @@
 链接：https://leetcode-cn.com/problems/string-to-integer-atoi
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
+from typing import List
 
 
 class Solution:
     def myAtoi(self, s: str) -> int:
-        pass
+        s = s.lstrip()
+        num = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        res = []
+        for i in range(len(s)):
+            if i == 0 and (s[i] == "-" or s[i] == '+'):
+                res.append(s[i])
+            elif s[i] in num:
+                res.append(s[i])
+            else:
+                break
+
+        if (len(res) == 0 or (len(res) == 1 and res[0] not in num)):
+            return 0
+
+        return max(min(int("".join(res)), 2 ** 31 - 1), -2 ** 31)
 
 
 if __name__ == '__main__':
     s = Solution()
-    print(s.myAtoi('  -334uiyed'))
+    print(s.myAtoi('42'))
+    print(s.myAtoi('   -42'))
+    print(s.myAtoi('4193 with words'))
+    print(s.myAtoi('words and 987'))
+    print(s.myAtoi('-91283472332'))
+
