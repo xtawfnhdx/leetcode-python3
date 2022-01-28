@@ -22,13 +22,32 @@ C可以放在D(500) 和M(1000) 的左边，来表示400 和900。
 链接：https://leetcode-cn.com/problems/roman-to-integer
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
+from typing import List
 
 
 class Solution:
     def romanToInt(self, s: str) -> int:
-        pass
+        res = {"M": 1000, "CM": 900, "D": 500, "CD": 400, "C": 100, "XC": 90, "L": 50, "XL": 40, "X": 10, "IX": 9,
+               "V": 5, "IV": 4, "I": 1}
+        total = 0
+        while True:
+            if len(s) == 0:
+                break
+            if len(s) == 1:
+                total += res[s[0]]
+                break
+            if s[:2] in res:
+                total += res[s[:2]]
+                s = s[2:]
+            else:
+                total += res[s[0]]
+                s = s[1:]
+        return total
 
 
 if __name__ == "__main__":
     s = Solution()
-    print(s.romanToInt(''))
+    print(s.romanToInt('III'))
+    print(s.romanToInt('IV'))
+    print(s.romanToInt('IX'))
+    print(s.romanToInt('MCMXCIV'))
