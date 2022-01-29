@@ -30,10 +30,13 @@ class Solution:
         nums.sort()
         res = []
         for i in range(listlen - 3):
+            #基于一些场景判断，可以减少一些循环
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
+            #最小的几个数都比最大值大，那么没有必要继续循环
             if nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target:
                 break
+            #最大的几个数都比比较值小，那么此次循环没必要继续
             if nums[i] + nums[listlen - 1] + nums[listlen - 2] + nums[listlen - 3] < target:
                 continue
             for j in range(i + 1, listlen - 2):
