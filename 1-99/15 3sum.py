@@ -56,13 +56,13 @@ class Solution:
                     if tempres not in res:
                         res.append(tempres)
         return res
-
+    
     def threeSumOld2(self, nums: List[int]) -> List[List[int]]:
         '''数据被移除，数据不能重复使用，思路不对'''
         res = []
         if len(nums) < 3:
             return []
-
+        
         while len(nums) >= 3:
             for j in range(len(nums) - 1, 0, -1):
                 temp = -1 * (nums[0] + nums[j])
@@ -76,30 +76,39 @@ class Solution:
                     break
             nums.remove(nums[0])
         return res
-
+    
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
         i, end, res = 0, len(nums), []
         while i < end:
+            if i > 0 and nums[i] == nums[i - 1]:
+                i += 1
+                continue
             startIndex, endIndex = i + 1, end - 1
+            # 不包括等于，等于的话重复，不能构成3个数字
             while startIndex < endIndex:
-
                 if nums[i] + nums[startIndex] + nums[endIndex] > 0:
                     endIndex -= 1
                 elif nums[i] + nums[startIndex] + nums[endIndex] < 0:
                     startIndex += 1
                 else:
-                    res.append([nums[i], nums[startIndex], nums[endIndex]])
+                    resTemp=[nums[i], nums[startIndex], nums[endIndex]]
+                    if resTemp not in res:
+                        res.append(resTemp)
+                    endIndex -= 1
+                    startIndex += 1
+            i += 1
+        return res
 
 
 if __name__ == "__main__":
     s = Solution()
-    # print(s.threeSum([1, 2, -2, -1]))
-    # print(s.threeSum([0, 0, 0]))
-    # print(s.threeSum([-1, 3, 2, 4, -4, 5, 2, -60]))
-    # print(s.threeSum([-1, 0, 1, 2, -1, -4]))
-    # print(s.threeSum([]))
-    # print(s.threeSum([0]))
+    print(s.threeSum([]))
+    print(s.threeSum([0]))
+    print(s.threeSum([0, 0, 0]))
+    print(s.threeSum([1, 2, -2, -1]))
+    print(s.threeSum([-1, 3, 2, 4, -4, 5, 2, -60]))
+    print(s.threeSum([-1, 0, 1, 2, -1, -4]))
     print(s.threeSum(
         [82597, -9243, 62390, 83030, -97960, -26521, -61011, 83390, -38677, 12333, 75987, 46091, 83794, 19355, -71037,
          -6242, -28801, 324, 1202, -90885, -2989, -95597, -34333, 35528, 5680, 89093, -90606, 50360, -29393, -27012,
